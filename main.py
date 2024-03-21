@@ -1,42 +1,58 @@
 while True:
+    #Get user input and strip space chars from it.
     user_action = input("type add, show, edit or exit")
     user_action = user_action.strip()
+
     match user_action:
         case 'add':
             todo = input("Enter a todo:") + "\n"
 
-            file = open('todos.txt', 'r')
-            todos = file.readlines()
-            file.close()
+            with open('todos.txt', 'r') as file:
+                todos = file.readlines()
 
             todos.append(todo)
-            file = open('todos.txt', 'w')
-            file.writelines(todos)
+
+            with open('todos.txt', 'w') as file:
+                file.writelines(todos)
 
         case 'show':
-            file = open('todos.txt', 'r')
-            todos = file.readlines()
-            file.close()
-            new_todos = []
 
-            for item in todos:
-                new_item = item.strip('\n')
-                new_todos.append(new_item)
+            with open('todos.txt', 'r') as file:
+                todos = file.readlines()
 
-
-            for index, item in enumerate(new_todos):
+            for index, item in enumerate(todos):
+                item = item.strip('\n')
                 row = (f"{index + 1}-{item}")
                 print(row)
 
         case 'edit':
             number = int(input("Number of the todo to edit"))
             number = number - 1
+
+            with open('todos.txt', 'r') as file:
+                todos = file.readlines()
+
             new_todo = input("enter the new todo")
-            todos[number] = new_todo
+            todos[number] = new_todo + '\n'
+
+            with open('todos.txt', 'w') as file:
+                file.writelines(todos)
 
         case 'complete':
             number = int(input("Number of the todo to complete"))
-            todos.pop(number - 1)
+
+            with open('todos.txt', 'r') as file:
+                todos = file.readlines()
+
+            index = number - 1
+            todo_to_remove = todos[index].strip('\n') #Strip it so it doesn't Indent on print message
+            todos.pop(index)
+
+            with open('todos.txt', 'w') as file:
+                file.writelines(todos)
+
+            message = f"Todo {todo_to_remove} was removed from the list"
+            print(message)
 
         case 'exit':
             break
