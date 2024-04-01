@@ -1,3 +1,9 @@
+def get_todos():
+    with open('todos.txt','r') as file:
+        todos_local = file.readlines()
+    return todos_local
+
+
 while True:
     #Get user input and strip space chars from it.
     user_action = input("type add, show, edit or exit")
@@ -7,8 +13,7 @@ while True:
     if user_action.startswith("add"):
         todo = user_action[4:]
 
-        with open('todos.txt', 'r') as file:
-            todos = file.readlines()
+        todos = get_todos()
 
         todos.append(todo + '\n')
 
@@ -17,8 +22,7 @@ while True:
 
     elif user_action.startswith("show"):
 
-        with open('todos.txt', 'r') as file:
-            todos = file.readlines()
+        todos = get_todos()
 
         for index, item in enumerate(todos):
             item = item.strip('\n')
@@ -32,8 +36,7 @@ while True:
 
             number = number - 1
 
-            with open('todos.txt', 'r') as file:
-                todos = file.readlines()
+            todos = get_todos()
 
             new_todo = input("enter the new todo")
             todos[number] = new_todo + '\n'
@@ -48,9 +51,7 @@ while True:
         try:
             number = int(user_action[9:])
 
-            with open('todos.txt', 'r') as file:
-                todos = file.readlines()
-
+            todos = get_todos()
             index = number - 1
             todo_to_remove = todos[index].strip('\n') #Strip it so it doesn't Indent on print message
             todos.pop(index)
