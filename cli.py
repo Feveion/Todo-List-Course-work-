@@ -11,7 +11,6 @@ while True:
     user_action = input("type add, show, edit or exit")
     user_action = user_action.strip()
 
-
     if user_action.startswith("add"):
         todo = user_action[4:]
 
