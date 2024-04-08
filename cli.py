@@ -2,6 +2,12 @@
 import functions
 import time
 
+
+if not os.path.exists("todos.txt"):
+    with open ("todos.txt", 'w') as file:
+        pass
+
+
 now = time.strftime("%b %d, %Y %H:%M:%S")
 print("The time is below: ")
 print("It is", now)
